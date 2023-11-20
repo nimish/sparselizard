@@ -82,13 +82,14 @@ if(GMSH_FOUND)
 endif()
 
 find_package(METIS)
-
 if(METIS_FOUND)
     target_link_libraries(sparselizard PUBLIC METIS::METIS)
     target_compile_definitions(sparselizard PRIVATE -DHAVE_METIS)
 endif()
 
-target_link_libraries(sparselizard PUBLIC cmumps)
+find_package(MUMPS REQUIRED)
+target_link_libraries(sparselizard PUBLIC MUMPS::MUMPS)
+
 target_compile_definitions(sparselizard PRIVATE
     -DHAVE_BLAS
     -DHAVE_MPI
